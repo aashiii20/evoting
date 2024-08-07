@@ -54,7 +54,7 @@ library ECCMultiplier {
         return convertBytesToBytes32(toBytesEth(a)) & convertBytesToBytes32(toBytesEth(shiftLeft(0x01,n))) != 0;
     }
 
-    function toBytesEth(uint256 x) public constant returns (bytes) {
+    function toBytesEth(uint256 x) public const returns (bytes) {
         var b = new bytes(32);
         for (uint i = 0; i < 32; i++) {
             b[i] = byte(uint8(x / (2**(8*(31 - i)))));

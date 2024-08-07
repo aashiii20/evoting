@@ -1,6 +1,6 @@
 library eccPrecompiles {
 
-function ecmul(uint256 x, uint256 y, uint256 scalar) public constant returns(uint256[2] p) {
+function ecmul(uint256 x, uint256 y, uint256 scalar) public const returns(uint256[2] p) {
 
 // With a public key (x, y), this computes p = scalar * (x, y).
 uint256[3] memory input;
@@ -17,7 +17,7 @@ assembly {
 
 }
 
-function ecadd(uint256 x1, uint256 y1, uint256 x2, uint256 y2) public constant returns (uint256[2] p) {
+function ecadd(uint256 x1, uint256 y1, uint256 x2, uint256 y2) public const returns (uint256[2] p) {
 // are all of these inside the precompile now?
 uint256[4] memory input;
 input[0] = x1;
@@ -34,7 +34,7 @@ assembly {
 }
 
 //bigModexp
-    function expmod(uint256 base, uint256 e, uint256 m) public constant returns (uint256 o) {
+    function expmod(uint256 base, uint256 e, uint256 m) public const returns (uint256 o) {
         // are all of these inside the precompile now?
 
         assembly {

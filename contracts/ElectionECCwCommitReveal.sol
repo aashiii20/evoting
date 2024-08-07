@@ -1,4 +1,4 @@
-pragma solidity ^0.4.19;
+pragma solidity ^0.5.16;
 
 import 'zeppelin-solidity/contracts/ownership/Ownable.sol';
 import 'zeppelin-solidity/contracts/math/SafeMath.sol';
@@ -17,9 +17,9 @@ contract ElectionECCwCommitReveal is Ownable {
   //https://github.com/ethereum/EIPs/pull/213
 
   //Y^2 = X^3 + 3
-  uint constant p = 0x30644e72e131a029b85045b68181585d97816a916871ca8d3c208c16d87cfd47; //field modulus
+  uint const p = 0x30644e72e131a029b85045b68181585d97816a916871ca8d3c208c16d87cfd47; //field modulus
 
-  uint constant n = 0x30644e72e131a029b85045b68181585d2833e84879b9709143e1f593f0000001; //curve order
+  uint const n = 0x30644e72e131a029b85045b68181585d2833e84879b9709143e1f593f0000001; //curve order
 
   uint256[2] public generatorPoint; //in affine coordinates
   uint256[2] public pubKeyOfOrganizer; //in affine coordinates
@@ -93,7 +93,7 @@ contract ElectionECCwCommitReveal is Ownable {
     eligibleVoters[_voter].eligible = false;
   }
 
-  function uintToString(uint v) constant returns (string str) {
+  function uintToString(uint v) const returns (string str) {
     uint maxlength = 78;
     bytes memory reversed = new bytes(maxlength);
     uint i = 0;

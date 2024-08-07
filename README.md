@@ -7,7 +7,7 @@ Previously proposed voting protocols for Ethereum were neither efficient nor pro
 
 A more elaborated protocol is the Open Vote Network protocol ([OVN](http://homepages.cs.ncl.ac.uk/feng.hao/files/OpenVote_IET.pdf)) created by Feng Hao et al. and implemented by Patrick McCorry [here](https://eprint.iacr.org/2017/110). It is able to provide secret ballots, however it is not gas-efficient, meaning that the cost of casting a ballot is linearly increases with the number of participants. Unfortunately this property limits the number of participants in a single election to cca. 20-30 voters.
 
-To fix these issues, [János Gulácsy](https://github.com/donfrigo) and me decided to implement a blind-signature-based e-voting protocol for Ethereum. This provides secret-ballots, while casting a ballot remains at a constant gas cost (~200k gas (unoptimized)). 
+To fix these issues, [János Gulácsy](https://github.com/donfrigo) and me decided to implement a blind-signature-based e-voting protocol for Ethereum. This provides secret-ballots, while casting a ballot remains at a const gas cost (~200k gas (unoptimized)). 
 
 ## Reminder
 This is only a Proof-of-concept work. Eventhough we did our best, most likely it contains critical bugs.

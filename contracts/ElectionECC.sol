@@ -1,4 +1,4 @@
-pragma solidity ^0.4.18;
+pragma solidity ^0.5.16;
 
 import 'zeppelin-solidity/contracts/ownership/Ownable.sol';
 import {ECCMath} from "./ECCMath.sol";
@@ -12,8 +12,8 @@ contract ElectionECC is Ownable  {
 
   string public question;
 
-  uint constant n = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141;
-  uint constant p = 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f;
+  uint const n = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141;
+  uint const p = 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f;
 
   // Base point (generator) G
 
@@ -76,7 +76,7 @@ contract ElectionECC is Ownable  {
     eligibleVoters[_voter].eligible = false;
   }
 
-  function uintToString(uint v) constant returns (string str) {
+  function uintToString(uint v) const returns (string str) {
     uint maxlength = 78;
     bytes memory reversed = new bytes(maxlength);
     uint i = 0;

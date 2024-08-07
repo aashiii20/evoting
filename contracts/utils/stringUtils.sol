@@ -1,5 +1,5 @@
 library StringUtils{
-  function uintToString(uint v) public constant returns (string str) {
+  function uintToString(uint v) public const returns (string str) {
     uint maxlength = 78;
     bytes memory reversed = new bytes(maxlength);
     uint i = 0;

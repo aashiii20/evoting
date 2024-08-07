@@ -1,4 +1,4 @@
-pragma solidity ^0.4.24;
+pragma solidity ^0.5.16;
 
 
 import 'zeppelin-solidity/contracts/ownership/Ownable.sol';
@@ -21,8 +21,8 @@ contract ElectionECCwPrecompile is Ownable {
 
   string public question;
 
-  uint constant p = 0x30644e72e131a029b85045b68181585d97816a916871ca8d3c208c16d87cfd47; // field modulus
-  uint constant n = 0x30644e72e131a029b85045b68181585d2833e84879b9709143e1f593f0000001; // curve order
+  uint const p = 0x30644e72e131a029b85045b68181585d97816a916871ca8d3c208c16d87cfd47; // field modulus
+  uint const n = 0x30644e72e131a029b85045b68181585d2833e84879b9709143e1f593f0000001; // curve order
 
   // altbn128 generator point
   uint256[2] public generatorPoint; // in affine coordinates

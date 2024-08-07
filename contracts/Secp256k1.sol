@@ -16,27 +16,27 @@ library Secp256k1 {
     // TODO separate curve from crypto primitives?
 
     // Field size
-    uint constant pp = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F;
+    uint const pp = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F;
 
     // Base point (generator) G
-    uint constant Gx = 0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798;
-    uint constant Gy = 0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8;
+    uint const Gx = 0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798;
+    uint const Gy = 0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8;
 
     // Order of G
-    uint constant nn = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141;
+    uint const nn = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141;
 
     // Cofactor
-    // uint constant hh = 1;
+    // uint const hh = 1;
 
     // Maximum value of s
-    uint constant lowSmax = 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5D576E7357A4501DDFE92F46681B20A0;
+    uint const lowSmax = 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5D576E7357A4501DDFE92F46681B20A0;
 
     // For later
-    // uint constant lambda = "0x5363ad4cc05c30e0a5261c028812645a122e22ea20816678df02967c1b23bd72";
-    // uint constant beta = "0x7ae96a2b657c07106e64479eac3434e99cf0497512f58995c1396c28719501ee";
+    // uint const lambda = "0x5363ad4cc05c30e0a5261c028812645a122e22ea20816678df02967c1b23bd72";
+    // uint const beta = "0x7ae96a2b657c07106e64479eac3434e99cf0497512f58995c1396c28719501ee";
 
     /// @dev See Curve.onCurve
-    function onCurve(uint[2] P) internal constant returns (bool) {
+    function onCurve(uint[2] P) internal const returns (bool) {
         uint p = pp;
         if (0 == P[0] || P[0] == p || 0 == P[1] || P[1] == p)
             return false;
@@ -46,12 +46,12 @@ library Secp256k1 {
     }
 
     /// @dev See Curve.isPubKey
-    function isPubKey(uint[2] memory P) internal constant returns (bool isPK) {
+    function isPubKey(uint[2] memory P) internal const returns (bool isPK) {
         isPK = onCurve(P);
     }
 
     /// @dev See Curve.validateSignature
-    function validateSignature(bytes32 message, uint[2] rs, uint[2] Q) internal constant returns (bool) {
+    function validateSignature(bytes32 message, uint[2] rs, uint[2] Q) internal const returns (bool) {
         uint n = nn;
         uint p = pp;
         if(rs[0] == 0 || rs[0] >= n || rs[1] == 0 || rs[1] > lowSmax)
@@ -73,13 +73,13 @@ library Secp256k1 {
     }
 
     /// @dev See Curve.compress
-    function compress(uint[2] P) internal constant returns (uint8 yBit, uint x) {
+    function compress(uint[2] P) internal const returns (uint8 yBit, uint x) {
         x = P[0];
         yBit = P[1] & 1 == 1 ? 1 : 0;
     }
 
     /// @dev See Curve.decompress
-    function decompress(uint8 yBit, uint x) internal constant returns (uint[2] P) {
+    function decompress(uint8 yBit, uint x) internal const returns (uint[2] P) {
         uint p = pp;
         var y2 = addmod(mulmod(x, mulmod(x, x, p), p), 7, p);
         var y_ = ECCMath.expmod(y2, (p + 1) / 4, p);
@@ -91,7 +91,7 @@ library Secp256k1 {
     // Point addition, P + Q
     // inData: Px, Py, Pz, Qx, Qy, Qz
     // outData: Rx, Ry, Rz
-    function _add(uint[3] memory P, uint[3] memory Q) public constant returns (uint[3] memory R) {
+    function _add(uint[3] memory P, uint[3] memory Q) public const returns (uint[3] memory R) {
         if(P[2] == 0)
             return Q;
         if(Q[2] == 0)
@@ -130,7 +130,7 @@ library Secp256k1 {
     // Point addition, P + Q. P Jacobian, Q affine.
     // inData: Px, Py, Pz, Qx, Qy
     // outData: Rx, Ry, Rz
-    function _addMixed(uint[3] memory P, uint[2] memory Q) internal constant returns (uint[3] memory R) {
+    function _addMixed(uint[3] memory P, uint[2] memory Q) internal const returns (uint[3] memory R) {
         if(P[2] == 0)
             return [Q[0], Q[1], 1];
         if(Q[1] == 0)
@@ -170,7 +170,7 @@ library Secp256k1 {
     }
 
     // Same as addMixed but params are different and mutates P.
-    function _addMixedM(uint[3] memory P, uint[2] memory Q) internal constant {
+    function _addMixedM(uint[3] memory P, uint[2] memory Q) internal const {
         if(P[1] == 0) {
             P[0] = Q[0];
             P[1] = Q[1];
@@ -216,7 +216,7 @@ library Secp256k1 {
     // Point doubling, 2*P
     // Params: Px, Py, Pz
     // Not concerned about the 1 extra mulmod.
-    function _double(uint[3] memory P) public constant returns (uint[3] memory Q) {
+    function _double(uint[3] memory P) public const returns (uint[3] memory Q) {
         uint p = pp;
         if (P[2] == 0)
             return;
@@ -232,7 +232,7 @@ library Secp256k1 {
     }
 
     // Same as double but mutates P and is internal only.
-    function _doubleM(uint[3] memory P) internal constant {
+    function _doubleM(uint[3] memory P) internal const {
         uint p = pp;
         if (P[2] == 0)
             return;
@@ -250,7 +250,7 @@ library Secp256k1 {
     // Multiplication dP. P affine, wNAF: w=5
     // Params: d, Px, Py
     // Output: Jacobian Q
-    function _mul(uint d, uint[2] memory P) internal constant returns (uint[3] memory Q) {
+    function _mul(uint d, uint[2] memory P) internal const returns (uint[3] memory Q) {
         uint p = pp;
         if (d == 0) // TODO
             return;

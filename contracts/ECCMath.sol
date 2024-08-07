@@ -11,7 +11,7 @@ library ECCMath {
     /// @param a The number.
     /// @param p The mmodulus.
     /// @return x such that ax = 1 (mod p)
-    function invmod(uint a, uint p) public constant returns (uint) {
+    function invmod(uint a, uint p) public view returns (uint) {
         if (a == 0 || a == p || p == 0)
             throw;
         if (a > p)
@@ -37,7 +37,7 @@ library ECCMath {
     /// @param e The exponent.
     /// @param m The modulus.
     /// @return x such that x = b**e (mod m)
-    function expmod(uint b, uint e, uint m) internal constant returns (uint r) {
+    function expmod(uint b, uint e, uint m) internal pure returns (uint r) {
         if (b == 0)
             return 0;
         if (e == 0)
@@ -66,7 +66,7 @@ library ECCMath {
     /// @param z2Inv The square of zInv
     /// @param prime The prime modulus.
     /// @return (Px', Py', 1)
-    function toZ1(uint[3] memory P, uint zInv, uint z2Inv, uint prime) public constant {
+    function toZ1(uint[3] memory P, uint zInv, uint z2Inv, uint prime) public pure {
         P[0] = mulmod(P[0], z2Inv, prime);
         P[1] = mulmod(P[1], mulmod(zInv, z2Inv, prime), prime);
         P[2] = 1;
@@ -77,7 +77,7 @@ library ECCMath {
     /// @param PJ The point.
     /// @param prime The prime modulus.
     /// @return (Px', Py', 1)
-    function toZ12(uint[3] PJ, uint prime) public constant returns (uint[3]) {
+    function toZ12(uint[3] PJ, uint prime) public pure returns (uint[3]) {
         uint zInv = invmod(PJ[2], prime);
         uint zInv2 = mulmod(zInv, zInv, prime);
         PJ[0] = mulmod(PJ[0], zInv2, prime);
